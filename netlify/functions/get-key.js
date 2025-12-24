@@ -9,14 +9,14 @@ export default async function handler(request) {
   const now = Date.now();
   const sixHoursMs = 6 * 60 * 60 * 1000; // ৬ ঘন্টা
 
-  // প্রতি ৬ ঘন্টায় চেঞ্জ হওয়া অংশ (এক্সপায়ারি নিয়ন্ত্রণ করে)
+  // প্রতি ৬ ঘন্টায় চেঞ্জ হওয়া অংশ
   const cycle = Math.floor(now / sixHoursMs);
 
-  // র‍্যান্ডম অংশ
-  const randomPart = Math.random().toString(36).substring(2, 12).toUpperCase();
+  // র‍্যান্ডম অংশ (৮ ক্যারেক্টার)
+  const randomPart = Math.random().toString(36).substring(2, 10).toUpperCase();
 
-  // ফাইনাল কী: শুরুতে AD-FREE-H6_ + cycle + র‍্যান্ডম
-  const key = `AD-FREE-H6_\( {cycle}- \){randomPart}`;
+  // ফাইনাল কী: AD-FREE-FIRE_ + cycle + - + র‍্যান্ডম
+  const key = `AD-FREE-FIRE_\( {cycle}- \){randomPart}`;
 
   const body = JSON.stringify({
     key: key,
