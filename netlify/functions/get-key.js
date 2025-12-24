@@ -1,12 +1,13 @@
-export default async function handler(event) {
-  // ক্যাশ বন্ধ করার জন্য হেডার
-  const noCacheHeaders = {
+export default async function handler(request) {
+  // ক্যাশ বন্ধ রাখার জন্য হেডার
+  const headers = {
     "Cache-Control": "no-cache, no-store, must-revalidate",
     "Pragma": "no-cache",
-    "Expires": "0"
+    "Expires": "0",
+    "Content-Type": "application/json"
   };
 
-  // র‍্যান্ডম কী বানানোর লিস্ট
+  // র‍্যান্ডম কী তৈরি
   const possibleKeys = [
     "VIP-ABCD1234-EFGH5678",
     "GODX-" + Math.floor(Math.random() * 100000),
@@ -15,12 +16,13 @@ export default async function handler(event) {
     "AD_FREE_FIRE_" + Math.floor(Math.random() * 999999)
   ];
 
-  // র‍্যান্ডম একটা কী বেছে নেওয়া
   const randomKey = possibleKeys[Math.floor(Math.random() * possibleKeys.length)];
 
-  return {
-    statusCode: 200,
-    headers: noCacheHeaders,  // এটাই ক্যাশ বন্ধ করে দেবে
-    body: JSON.stringify({ key: randomKey })
-  };
+  // নতুন ফরম্যাটে Response রিটার্ন করো
+  const body = JSON.stringify({ key: randomKey });
+
+  return new Response(body, {
+    status: 200,
+    headers: headers
+  });
 }
