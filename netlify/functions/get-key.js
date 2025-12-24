@@ -14,8 +14,13 @@ export default async function handler(request) {
 
   const key = `AD-FREE-FIRE_\( {cycle}- \){randomPart}`;
 
-  return new Response(JSON.stringify({
+  const body = JSON.stringify({
     key: key,
     expiresAt: now + sixHours
-  }), { status: 200, headers });
+  });
+
+  return new Response(body, {
+    status: 200,
+    headers: headers
+  });
 }
