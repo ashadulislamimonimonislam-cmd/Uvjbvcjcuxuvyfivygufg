@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AD FREE VIP KEY</title>
+  <style>
+    body { background:#000; color:#fff; font-family:Arial; text-align:center; padding:20px; }
+    h1 { color:#ff00aa; text-shadow:0 0 10px #ff00aa; }
+    button { padding:15px 30px; margin:10px; font-size:18px; cursor:pointer; border:none; border-radius:10px; }
+    #result { margin-top:30px; font-size:24px; color:#00ffff; min-height:50px; }
+  </style>
+</head>
+<body>
+  <h1>AD FREE FIRE VIP KEY GENERATOR</h1>
+  <button onclick="generateKey()" style="background:#00ffff; color:black;">GENERATE KEY</button>
+  <div id="result">AD FREE</div>
+
+  <script>
+    async function generateKey() {
+      document.getElementById('result').innerText = "লোড হচ্ছে...";
+      try {
+        const response = await fetch('/.netlify/functions/get-key');
+        const data = await response.json();
+        document.getElementById('result').innerText = "তোমার VIP KEY: " + data.key;
+      } catch (error) {
+        document.getElementById('result').innerText = "কিছু সমস্যা হয়েছে! পরে আবার চেষ্টা করো";
+        console.log(error);
+      }
+    }
+  </script>
+</body>
+</html>
