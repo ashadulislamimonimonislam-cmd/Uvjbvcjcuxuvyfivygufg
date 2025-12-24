@@ -1,5 +1,4 @@
 export default async function handler(request) {
-  // ক্যাশ বন্ধ রাখার জন্য হেডার
   const headers = {
     "Cache-Control": "no-cache, no-store, must-revalidate",
     "Pragma": "no-cache",
@@ -7,19 +6,23 @@ export default async function handler(request) {
     "Content-Type": "application/json"
   };
 
-  // র‍্যান্ডম কী তৈরি
-  const possibleKeys = [
-    "VIP-ABCD1234-EFGH5678",
-    "GODX-" + Math.floor(Math.random() * 100000),
-    "SECRET-KEY-" + Date.now(),
-    "GUJJU-MODS-" + Math.random().toString(36).substring(2,10).toUpperCase(),
-    "AD_FREE_FIRE_" + Math.floor(Math.random() * 999999)
-  ];
+  const now = Date.now();
+  const sixHoursMs = 6 * 60 * 60 * 1000; // ৬ ঘন্টা
 
-  const randomKey = possibleKeys[Math.floor(Math.random() * possibleKeys.length)];
+  // প্রতি ৬ ঘন্টায় চেঞ্জ হওয়া অংশ (এক্সপায়ারি নিয়ন্ত্রণ করে)
+  const cycle = Math.floor(now / sixHoursMs);
 
-  // নতুন ফরম্যাটে Response রিটার্ন করো
-  const body = JSON.stringify({ key: randomKey });
+  // র‍্যান্ডম অংশ
+  const randomPart = Math.random().toString(36).substring(2, 12).toUpperCase();
+
+  // ফাইনাল কী: শুরুতে AD-FREE-H6_ + cycle + র‍্যান্ডম
+  const key = `AD-FREE-H6_\( {cycle}- \){randomPart}`;
+
+  const body = JSON.stringify({
+    key: key,
+    createdAt: now,
+    expiresAt: now + sixHoursMs
+  });
 
   return new Response(body, {
     status: 200,
