@@ -1,40 +1,84 @@
-<script>
-  let currentKey = "";
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AD FREE VIP KEY</title>
+  <style>
+    body { background:#000; color:#fff; font-family:Arial; text-align:center; padding:20px; margin:0; }
+    h1 { font-size:2.2rem; color:#ff3333; margin:20px 0; text-shadow:0 0 10px #ff3333; }
+    button { padding:15px 35px; font-size:1.3rem; margin:15px; border:none; border-radius:50px; cursor:pointer; }
+    #generateBtn { background:#ff3333; color:white; box-shadow:0 0 15px #ff3333; }
+    #copyBtn { background:#cc0000; color:white; box-shadow:0 0 15px #cc0000; display:none; }
+    button:hover { transform:scale(1.05); }
+    button:disabled { background:#555; cursor:not-allowed; }
+    #keyBox { margin:30px auto; padding:20px; font-size:1.5rem; background:#111; border:2px dashed #ff3333; border-radius:15px; max-width:90%; word-break:break-all; min-height:80px; color:#ff6666; }
+    #toast { position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:#222; color:#fff; padding:10px 20px; border-radius:8px; display:none; z-index:100; }
+  </style>
+</head>
+<body>
+  <h1>AD FREE FIRE VIP KEY GENERATOR</h1>
+  
+  <button id="generateBtn">GENERATE KEY</button>
+  <div id="keyBox">কী এখানে দেখাবে...</div>
+  <button id="copyBtn">কপি করুন</button>
 
-  document.getElementById('generateBtn').addEventListener('click', async () => {
-    const keyBox = document.getElementById('keyBox');
-    keyBox.innerText = "লোড হচ্ছে...";
+  <div id="toast">কপি হয়ে গেছে!</div>
 
-    try {
-      const response = await fetch('https://adfreej.netlify.app/.netlify/functions/get-key', { cache: 'no-store' });
-      if (!response.ok) throw new Error("সার্ভার এরর: " + response.status);
+  <script>
+    let currentKey = "";
 
-      const data = await response.json();
-      currentKey = data.key;
+    // চেক করো: এই সেশনে কি ইতিমধ্যে জেনারেট করা হয়েছে?
+    const hasGenerated = sessionStorage.getItem('hasGenerated') === 'true';
 
-      const now = Date.now();
-      if (data.expiresAt && now > data.expiresAt) {
-        keyBox.innerText = "কী এক্সপায়ার হয়ে গেছে!\nনতুন জেনারেট করুন";
-        document.getElementById('copyBtn').style.display = 'none';
-      } else {
-        keyBox.innerText = currentKey + "\n(৬ ঘণ্টা পর এক্সপায়ার হবে)";
-        document.getElementById('copyBtn').style.display = 'block';
-      }
-    } catch (error) {
-      keyBox.innerText = "সমস্যা: " + error.message;
+    if (hasGenerated) {
+      document.getElementById('generateBtn').disabled = true;
+      document.getElementById('generateBtn').innerText = "আর জেনারেট করা যাবে না (নতুন লিঙ্কে ঢোকো)";
+      document.getElementById('keyBox').innerText = "আগের কী দেখতে নতুন লিঙ্কে ঢুকো";
       document.getElementById('copyBtn').style.display = 'none';
     }
-  });
 
-  document.getElementById('copyBtn').addEventListener('click', () => {
-    if (currentKey) {
-      navigator.clipboard.writeText(currentKey).then(() => {
-        const toast = document.getElementById('toast');
-        toast.style.display = 'block';
-        setTimeout(() => { toast.style.display = 'none'; }, 2500);
-      }).catch(() => {
-        alert("কপি করতে সমস্যা হয়েছে");
-      });
-    }
-  });
-</script>
+    document.getElementById('generateBtn').addEventListener('click', async () => {
+      if (hasGenerated) return; // যদি ইতিমধ্যে জেনারেট করা থাকে, কিছু করো না
+
+      const keyBox = document.getElementById('keyBox');
+      keyBox.innerText = "লোড হচ্ছে...";
+
+      try {
+        const response = await fetch('https://adfreej.netlify.app/.netlify/functions/get-key', { cache: 'no-store' });
+        if (!response.ok) throw new Error("সার্ভার এরর");
+
+        const data = await response.json();
+        currentKey = data.key;
+
+        const now = Date.now();
+        if (data.expiresAt && now > data.expiresAt) {
+          keyBox.innerText = "কী এক্সপায়ার হয়ে গেছে!\nনতুন জেনারেট করুন";
+        } else {
+          keyBox.innerText = currentKey + "\n(৬ ঘণ্টা পর এক্সপায়ার হবে)";
+          document.getElementById('copyBtn').style.display = 'block';
+
+          // এই সেশনে জেনারেট করা মার্ক করো
+          sessionStorage.setItem('hasGenerated', 'true');
+          document.getElementById('generateBtn').disabled = true;
+          document.getElementById('generateBtn').innerText = "আর জেনারেট করা যাবে না (নতুন লিঙ্কে ঢোকো)";
+        }
+      } catch (error) {
+        keyBox.innerText = "সমস্যা: " + error.message;
+      }
+    });
+
+    document.getElementById('copyBtn').addEventListener('click', () => {
+      if (currentKey) {
+        navigator.clipboard.writeText(currentKey).then(() => {
+          const toast = document.getElementById('toast');
+          toast.style.display = 'block';
+          setTimeout(() => { toast.style.display = 'none'; }, 2500);
+        }).catch(() => {
+          alert("কপি করতে সমস্যা হয়েছে");
+        });
+      }
+    });
+  </script>
+</body>
+</html>
