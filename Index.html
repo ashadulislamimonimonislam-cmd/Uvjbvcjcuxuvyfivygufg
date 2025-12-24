@@ -5,75 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AD FREE VIP KEY</title>
   <style>
-    body {
-      background: #000;
-      color: #fff;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 20px;
-      margin: 0;
-    }
-    h1 {
-      font-size: 2.2rem;
-      background: linear-gradient(90deg, #ff00aa, #00ffff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin: 20px 0;
-      text-shadow: 0 0 15px #00ffff;
-    }
-    button {
-      padding: 15px 35px;
-      font-size: 1.3rem;
-      margin: 15px;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-    #generateBtn {
-      background: #00ffff;
-      color: #000;
-      box-shadow: 0 0 20px #00ffff80;
-    }
-    #copyBtn {
-      background: #ff00aa;
-      color: white;
-      box-shadow: 0 0 20px #ff00aa80;
-    }
-    button:hover { transform: scale(1.08); }
-    #result {
-      margin: 30px auto;
-      font-size: 1.5rem;
-      min-height: 80px;
-      color: #00ffff;
-      word-break: break-all;
-      padding: 15px;
-      border: 2px dashed #00ffff; /* বক্স স্টাইল */
-      border-radius: 15px;
-      max-width: 80%;
-      background: rgba(0, 255, 255, 0.1);
-      box-shadow: 0 0 15px #00ffff50;
-    }
-    #toast {
-      position: fixed;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #333;
-      color: white;
-      padding: 12px 25px;
-      border-radius: 10px;
-      display: none;
-      z-index: 100;
-    }
+    body { background:#000; color:#fff; font-family:Arial; text-align:center; padding:20px; margin:0; }
+    h1 { font-size:2.2rem; background:linear-gradient(90deg,#ff00aa,#00ffff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin:20px 0; text-shadow:0 0 15px #00ffff; }
+    button { padding:15px 35px; font-size:1.3rem; margin:15px; border:none; border-radius:50px; cursor:pointer; transition:all 0.3s; }
+    #generateBtn { background:#00ffff; color:#000; box-shadow:0 0 20px #00ffff80; }
+    #copyBtn { background:#ff00aa; color:white; box-shadow:0 0 20px #ff00aa80; display:none; }
+    button:hover { transform:scale(1.08); }
+    #keyBox { margin:30px auto; padding:20px; font-size:1.5rem; background:rgba(0,255,255,0.1); border:2px dashed #00ffff; border-radius:15px; max-width:90%; word-break:break-all; box-shadow:0 0 15px #00ffff50; min-height:80px; color:#00ffff; }
+    #toast { position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:#333; color:white; padding:12px 25px; border-radius:10px; display:none; z-index:100; }
   </style>
 </head>
 <body>
   <h1>AD FREE FIRE VIP KEY GENERATOR</h1>
-  
   <button id="generateBtn">GENERATE KEY</button>
-  <div id="result">কী এখানে দেখাবে...</div>
-  <button id="copyBtn" style="display:none;">কপি করুন</button>
+  <div id="keyBox">কী এখানে দেখাবে...</div>
+  <button id="copyBtn">কপি করুন</button>
 
   <div id="toast">কপি হয়ে গেছে!</div>
 
@@ -81,9 +27,9 @@
     let currentKey = "";
 
     document.getElementById('generateBtn').addEventListener('click', async () => {
-      document.getElementById('result').innerText = "লোড হচ্ছে...";
+      document.getElementById('keyBox').innerText = "লোড হচ্ছে...";
       try {
-        const response = await fetch('https://adfreej.netlify.app/.netlify/functions/get-key');
+        const response = await fetch('https://adfreej.netlify.app/.netlify/functions/get-key', { cache: 'no-store' });
         if (!response.ok) throw new Error("সার্ভার এরর: " + response.status);
         
         const data = await response.json();
@@ -91,14 +37,14 @@
 
         const now = Date.now();
         if (now > data.expiresAt) {
-          document.getElementById('result').innerText = "কী এক্সপায়ার হয়ে গেছে! নতুন জেনারেট করুন";
+          document.getElementById('keyBox').innerText = "কী এক্সপায়ার হয়ে গেছে! নতুন জেনারেট করুন";
           document.getElementById('copyBtn').style.display = 'none';
         } else {
-          document.getElementById('result').innerText = `তোমার VIP KEY:\n${currentKey}\n(৬ ঘণ্টা পর এক্সপায়ার হবে)`;
+          document.getElementById('keyBox').innerText = currentKey + "\n(৬ ঘণ্টা পর এক্সপায়ার হবে)";
           document.getElementById('copyBtn').style.display = 'block';
         }
       } catch (error) {
-        document.getElementById('result').innerText = "সমস্যা: " + error.message;
+        document.getElementById('keyBox').innerText = "সমস্যা: " + error.message;
       }
     });
 
@@ -109,7 +55,7 @@
           toast.style.display = 'block';
           setTimeout(() => { toast.style.display = 'none'; }, 2500);
         }).catch(err => {
-          alert("কপি করতে সমস্যা হয়েছে: " + err);
+          alert("কপি করতে সমস্যা: " + err);
         });
       }
     });
