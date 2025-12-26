@@ -1,84 +1,170 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AD FREE VIP KEY</title>
-  <style>
-    body { background:#000; color:#fff; font-family:Arial; text-align:center; padding:20px; margin:0; }
-    h1 { font-size:2.2rem; color:#ff3333; margin:20px 0; text-shadow:0 0 10px #ff3333; }
-    button { padding:15px 35px; font-size:1.3rem; margin:15px; border:none; border-radius:50px; cursor:pointer; }
-    #generateBtn { background:#ff3333; color:white; box-shadow:0 0 15px #ff3333; }
-    #copyBtn { background:#cc0000; color:white; box-shadow:0 0 15px #cc0000; display:none; }
-    button:hover { transform:scale(1.05); }
-    button:disabled { background:#555; cursor:not-allowed; }
-    #keyBox { margin:30px auto; padding:20px; font-size:1.5rem; background:#111; border:2px dashed #ff3333; border-radius:15px; max-width:90%; word-break:break-all; min-height:80px; color:#ff6666; }
-    #toast { position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:#222; color:#fff; padding:10px 20px; border-radius:8px; display:none; z-index:100; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AD FREE FIRE KEY GENERATOR</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: sans-serif; text-align: center; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .container { 
+            border: 2px solid #ff0000; 
+            padding: 30px; 
+            border-radius: 15px; 
+            box-shadow: 0 0 20px #ff0000; 
+            background: #0a0000; 
+            width: 320px; 
+            animation: customRainbow 10s linear infinite;
+        }
+        h1 { 
+            color: #ff0000; 
+            font-size: 20px; 
+            margin-bottom: 20px; 
+            text-shadow: 0 0 10px #ff0000; 
+            animation: customRainbow 10s linear infinite;
+        }
+        #keyDisplay { 
+            background: #1a0000; 
+            border: 2px dashed #ff0000; 
+            padding: 15px; 
+            margin-bottom: 20px; 
+            font-size: 18px; 
+            color: #ffff00; 
+            font-weight: bold; 
+            word-break: break-all; 
+            min-height: 30px; 
+            box-shadow: 0 0 15px #ff0000; 
+            animation: customRainbow 10s linear infinite;
+        }
+        .btn-gen { 
+            background: #ff0000; 
+            color: #ffff00; 
+            border: none; 
+            padding: 12px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            border-radius: 8px; 
+            width: 100%; 
+            margin-bottom: 10px; 
+            box-shadow: 0 0 15px #ff0000; 
+            animation: customRainbow 10s linear infinite;
+        }
+        .btn-copy { 
+            background: #ffff00; 
+            color: #ff0000; 
+            border: none; 
+            padding: 10px; 
+            cursor: pointer; 
+            border-radius: 5px; 
+            width: 100%; 
+            box-shadow: 0 0 10px #ffff00; 
+            animation: customRainbow 10s linear infinite;
+        }
+        .btn-gen:disabled { background: #550000; opacity: 0.6; }
+        #status { color: #ffff00; text-shadow: 0 0 8px #ff0000; animation: customRainbow 10s linear infinite; }
+
+        @keyframes customRainbow {
+            0% { color: #ff0000; border-color: #ff0000; box-shadow: 0 0 20px #ff0000; text-shadow: 0 0 10px #ff0000; background: #1a0000; } /* লাল */
+            25% { color: #ffaa00; border-color: #ffaa00; box-shadow: 0 0 20px #ffaa00; text-shadow: 0 0 10px #ffaa00; background: #1a0f00; } /* কমলা */
+            50% { color: #ffff00; border-color: #ffff00; box-shadow: 0 0 20px #ffff00; text-shadow: 0 0 10px #ffff00; background: #1a1a00; } /* হলুদ */
+            75% { color: #00ff00; border-color: #00ff00; box-shadow: 0 0 20px #00ff00; text-shadow: 0 0 10px #00ff00; background: #001a00; } /* সবুজ */
+            100% { color: #8b4513; border-color: #8b4513; box-shadow: 0 0 20px #8b4513; text-shadow: 0 0 10px #8b4513; background: #1a0a00; } /* বাদামী */
+        }
+    </style>
 </head>
 <body>
-  <h1>AD FREE FIRE VIP KEY GENERATOR</h1>
-  
-  <button id="generateBtn">GENERATE KEY</button>
-  <div id="keyBox">কী এখানে দেখাবে...</div>
-  <button id="copyBtn">কপি করুন</button>
 
-  <div id="toast">কপি হয়ে গেছে!</div>
+<div class="container">
+    <h1>AD FREE FIRE GENERATOR</h1>
+    <div id="keyDisplay">Generating...</div>
+    <button id="genBtn" class="btn-gen" onclick="generateKey()">GENERATE KEY</button>
+    <button class="btn-copy" onclick="copyKey()">COPY KEY</button>
+    <p id="status" style="font-size: 12px; margin-top: 10px;"></p>
+</div>
 
-  <script>
-    let currentKey = "";
+<script>
+    // তোমার Airtable PAT Token এবং Base ID
+    const AIRTABLE_TOKEN = "pat7VbFhSLuF7Exjs.29d10f3ff1a2551c5a79cb8c4b40367631e1a4c981f8f292cd0678a082138993"; // pat... পেস্ট করো
+    const BASE_ID = "appHbQG5ueJjplXDR"; // তোমারটা
+    const TABLE_NAME = "Keys";
 
-    // চেক করো: এই সেশনে কি ইতিমধ্যে জেনারেট করা হয়েছে?
-    const hasGenerated = sessionStorage.getItem('hasGenerated') === 'true';
-
-    if (hasGenerated) {
-      document.getElementById('generateBtn').disabled = true;
-      document.getElementById('generateBtn').innerText = "আর জেনারেট করা যাবে না (নতুন লিঙ্কে ঢোকো)";
-      document.getElementById('keyBox').innerText = "আগের কী দেখতে নতুন লিঙ্কে ঢুকো";
-      document.getElementById('copyBtn').style.display = 'none';
+    function getHWID() {
+        const info = navigator.userAgent + navigator.language + screen.width + screen.height + new Date().getTimezoneOffset();
+        let hash = 0;
+        for (let i = 0; i < info.length; i++) {
+            hash = (hash << 5) - hash + info.charCodeAt(i);
+            hash |= 0;
+        }
+        return Math.abs(hash).toString(36).toUpperCase();
     }
 
-    document.getElementById('generateBtn').addEventListener('click', async () => {
-      if (hasGenerated) return; // যদি ইতিমধ্যে জেনারেট করা থাকে, কিছু করো না
+    const hwid = getHWID();
 
-      const keyBox = document.getElementById('keyBox');
-      keyBox.innerText = "লোড হচ্ছে...";
+    window.onload = () => {
+        document.getElementById('keyDisplay').innerText = "Device HWID: " + hwid;
+    };
 
-      try {
-        const response = await fetch('https://adfreej.netlify.app/.netlify/functions/get-key', { cache: 'no-store' });
-        if (!response.ok) throw new Error("সার্ভার এরর");
+    async function generateKey() {
+        document.getElementById('status').innerText = "Generating & saving...";
+        document.getElementById('genBtn').disabled = true;
 
-        const data = await response.json();
-        currentKey = data.key;
+        const randomPart = Math.random().toString(36).substring(2, 8).toUpperCase();
+        const newKey = "AD FREE KEY-" + randomPart + "-" + hwid;
 
-        const now = Date.now();
-        if (data.expiresAt && now > data.expiresAt) {
-          keyBox.innerText = "কী এক্সপায়ার হয়ে গেছে!\nনতুন জেনারেট করুন";
-        } else {
-          keyBox.innerText = currentKey + "\n(৬ ঘণ্টা পর এক্সপায়ার হবে)";
-          document.getElementById('copyBtn').style.display = 'block';
+        try {
+            const searchUrl = `https://api.airtable.com/v0/\( {BASE_ID}/ \){TABLE_NAME}?filterByFormula={HWID}='${hwid}'`;
+            const searchResponse = await fetch(searchUrl, {
+                headers: { 'Authorization': 'Bearer ' + AIRTABLE_TOKEN }
+            });
+            const searchData = await searchResponse.json();
 
-          // এই সেশনে জেনারেট করা মার্ক করো
-          sessionStorage.setItem('hasGenerated', 'true');
-          document.getElementById('generateBtn').disabled = true;
-          document.getElementById('generateBtn').innerText = "আর জেনারেট করা যাবে না (নতুন লিঙ্কে ঢোকো)";
+            if (searchData.records && searchData.records.length > 0) {
+                for (const record of searchData.records) {
+                    await fetch(`https://api.airtable.com/v0/\( {BASE_ID}/ \){TABLE_NAME}/${record.id}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Authorization': 'Bearer ' + AIRTABLE_TOKEN,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            fields: { Status: "Inactive" }
+                        })
+                    });
+                }
+            }
+
+            await fetch(`https://api.airtable.com/v0/\( {BASE_ID}/ \){TABLE_NAME}`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + AIRTABLE_TOKEN,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    fields: {
+                        Password: newKey,
+                        HWID: hwid,
+                        Status: "Active"
+                    }
+                })
+            });
+
+            document.getElementById('keyDisplay').innerText = newKey;
+            document.getElementById('status').innerText = "Key generated & saved successfully!";
+        } catch (error) {
+            document.getElementById('status').innerText = "Network error, try again.";
+            document.getElementById('genBtn').disabled = false;
         }
-      } catch (error) {
-        keyBox.innerText = "সমস্যা: " + error.message;
-      }
-    });
+    }
 
-    document.getElementById('copyBtn').addEventListener('click', () => {
-      if (currentKey) {
-        navigator.clipboard.writeText(currentKey).then(() => {
-          const toast = document.getElementById('toast');
-          toast.style.display = 'block';
-          setTimeout(() => { toast.style.display = 'none'; }, 2500);
-        }).catch(() => {
-          alert("কপি করতে সমস্যা হয়েছে");
-        });
-      }
-    });
-  </script>
+    function copyKey() {
+        const text = document.getElementById('keyDisplay').innerText;
+        if (text.includes("Device HWID") || text.includes("Generating")) {
+            alert("Please generate a key first!");
+            return;
+        }
+        navigator.clipboard.writeText(text);
+        alert("Key Copied!");
+    }
+</script>
+
 </body>
 </html>
